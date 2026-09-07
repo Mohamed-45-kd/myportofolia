@@ -1,0 +1,38 @@
+:root{
+  --font-display:"Space Grotesk","Space Grotesk Fallback",system-ui,sans-serif;
+  --font-body:"Manrope",system-ui,-apple-system,sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,monospace;
+
+  /* Type scale — 1.25 major third, rem-based on 16px root */
+  --text-2xs:11px;
+  --text-xs:12px;
+  --text-sm:14px;
+  --text-base:16px;
+  --text-md:18px;
+  --text-lg:20px;
+  --text-xl:24px;
+  --text-2xl:30px;
+  --text-3xl:38px;
+  --text-4xl:48px;
+  --text-5xl:60px;
+  --text-6xl:76px;
+  --text-hero:clamp(44px,7vw,92px);
+
+  --leading-tight:1.05; /* @kind other */
+  --leading-snug:1.2; /* @kind other */
+  --leading-normal:1.5; /* @kind other */
+  --leading-relaxed:1.7; /* @kind other */
+
+  --weight-regular:400; /* @kind font */
+  --weight-medium:500; /* @kind font */
+  --weight-semibold:600; /* @kind font */
+  --weight-bold:700; /* @kind font */
+  --weight-extrabold:800; /* @kind font */
+
+  /* Tracking — display is tightened, eyebrows/labels are widely tracked (logo motif) */
+  --track-tight:-0.03em; /* @kind other */
+  --track-snug:-0.015em; /* @kind other */
+  --track-normal:0em; /* @kind other */
+  --track-wide:0.08em; /* @kind other */
+  --track-eyebrow:0.22em; /* @kind other */
+}

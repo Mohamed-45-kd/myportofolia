@@ -1,0 +1,80 @@
+:root{
+  /* Brand ramp — blue */
+  --blue-100:#CCE7FF;--blue-200:#99CFFF;--blue-300:#66B6FF;--blue-400:#339EFF;
+  --blue-500:#0A84FF;--blue-600:#0066FF;--blue-700:#0049CC;--blue-800:#002F85;
+  --cyan-300:#66DBFF;--cyan-400:#33CFFF;--cyan-500:#00C2FF;--cyan-600:#009BCC;
+
+  /* Neutral ramp — cool, blue-shifted (matches slate) */
+  --ink-950:#05070B;--ink-900:#0B111A;--ink-850:#111A27;--ink-800:#16202F;
+  --ink-700:#1E293B;--ink-600:#334155;--ink-500:#475569;--ink-400:#64748B;
+  --ink-300:#94A3B8;--ink-200:#CBD5E1;--ink-100:#E2E8F0;--ink-050:#F1F5F9;--ink-000:#F8FAFC;
+
+  /* Brand roles */
+  --brand-primary:#0A84FF;
+  --brand-accent:#00C2FF;
+  --brand-deep:#0066FF;
+
+  /* Semantic status */
+  --success-500:#22D39A;--success-surface:rgba(34,211,154,.12);
+  --warning-500:#FFB020;--warning-surface:rgba(255,176,32,.12);
+  --danger-500:#FF4D5E;--danger-surface:rgba(255,77,94,.12);
+  --info-500:#00C2FF;--info-surface:rgba(0,194,255,.12);
+
+  /* Semantic aliases — dark is the default theme */
+  --bg-base:#05070B;
+  --bg-subtle:#0B111A;
+  --surface-raised:#0B111A;
+  --surface-card:#111A27;
+  --surface-inset:#0B111A;
+  --surface-hover:#16202F;
+  --surface-overlay:rgba(5,7,11,.72);
+
+  --text-primary:#F8FAFC;
+  --text-secondary:#CBD5E1;
+  --text-muted:#94A3B8;
+  --text-faint:#64748B;
+  --text-on-brand:#05070B;
+  --text-link:#0A84FF;
+  --text-link-hover:#00C2FF;
+
+  --border-subtle:#1E293B;
+  --border-strong:#334155;
+  --border-brand:rgba(10,132,255,.45);
+  --focus-ring:#00C2FF;
+
+  /* Signature gradients */
+  --gradient-brand:linear-gradient(135deg,#0066FF 0%,#0A84FF 48%,#00C2FF 100%); /* @kind color */
+  --gradient-text:linear-gradient(100deg,#F8FAFC 0%,#94C7FF 55%,#00C2FF 100%); /* @kind color */
+  --gradient-hero-glow:radial-gradient(60% 60% at 50% 0%,rgba(10,132,255,.22) 0%,rgba(5,7,11,0) 70%); /* @kind color */
+  --gradient-card-edge:linear-gradient(160deg,rgba(248,250,252,.10) 0%,rgba(248,250,252,0) 45%); /* @kind color */
+  --grid-line:rgba(30,41,59,.55); /* @kind color */
+}
+
+/* Light theme — apply data-theme="light" on <html> or any container */
+[data-theme="light"]{
+  --bg-base:#F8FAFC;
+  --bg-subtle:#F1F5F9;
+  --surface-raised:#FFFFFF;
+  --surface-card:#FFFFFF;
+  --surface-inset:#F1F5F9;
+  --surface-hover:#EEF3F9;
+  --surface-overlay:rgba(15,23,42,.45);
+
+  --text-primary:#05070B;
+  --text-secondary:#334155;
+  --text-muted:#475569;
+  --text-faint:#94A3B8;
+  --text-on-brand:#FFFFFF;
+  --text-link:#0066FF;
+  --text-link-hover:#0A84FF;
+
+  --border-subtle:#E2E8F0;
+  --border-strong:#CBD5E1;
+  --border-brand:rgba(0,102,255,.35);
+  --focus-ring:#0066FF;
+
+  --gradient-hero-glow:radial-gradient(60% 60% at 50% 0%,rgba(10,132,255,.14) 0%,rgba(248,250,252,0) 70%); /* @kind color */
+  --gradient-text:linear-gradient(100deg,#05070B 0%,#0066FF 60%,#00C2FF 100%); /* @kind color */
+  --gradient-card-edge:linear-gradient(160deg,rgba(5,7,11,.05) 0%,rgba(5,7,11,0) 45%); /* @kind color */
+  --grid-line:rgba(203,213,225,.7); /* @kind color */
+}
