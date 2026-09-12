@@ -4,6 +4,7 @@ import { randomUUID } from "node:crypto";
 
 import type { Database } from "./types";
 import { seedDatabase } from "./seed";
+import * as pg from "./store/postgres";
 
 /**
  * The storage seam.
@@ -18,10 +19,15 @@ import { seedDatabase } from "./seed";
  * which is the better shape once the data is relational). Nothing else changes:
  * every page and every server action goes through `repo.ts`.
  *
- * NOTE ON HOSTING: a serverless filesystem is read-only and ephemeral, so this
- * store persists on a normal server or a container but NOT on Vercel's
- * serverless runtime. `isWritable()` reports which situation you are in, and
- * the admin UI shows a banner when writes cannot be saved.
+ * TWO BACKENDS, chosen automatically:
+ *
+ *   • Postgres — used whenever a connection string is present (DATABASE_URL,
+ *     POSTGRES_URL, ...). This is what makes the dashboard work on a serverless
+ *     host, where there is no writable disk.
+ *   • JSON file — the local default, so a fresh clone runs with no setup.
+ *
+ * `storageMode()` reports which one is live, and the admin UI explains the
+ * situation when writes cannot be persisted.
  */
 
 const DATA_DIR = path.join(process.cwd(), "data");
@@ -46,7 +52,20 @@ async function loadFromDisk(): Promise<Database | null> {
   }
 }
 
+export type StorageMode = "postgres" | "file" | "ephemeral";
+
+/** Which backend is actually in use right now. */
+export async function storageMode(): Promise<StorageMode> {
+  if (pg.isConfigured()) return "postgres";
+  return (await isFileWritable()) ? "file" : "ephemeral";
+}
+
 export async function readDatabase(): Promise<Database> {
+  if (pg.isConfigured()) return pg.readStore();
+  return readFromFile();
+}
+
+async function readFromFile(): Promise<Database> {
   // Reuse the cached copy when the file has not changed underneath us.
   if (cache) {
     try {
@@ -62,12 +81,17 @@ export async function readDatabase(): Promise<Database> {
 
   // First run (or a read-only filesystem): seed from the content modules.
   const seeded = seedDatabase();
-  const saved = await writeDatabase(seeded);
+  const saved = await writeToFile(seeded);
   if (!saved) cache = { db: seeded, mtime: 0 };
   return seeded;
 }
 
 export async function writeDatabase(db: Database): Promise<boolean> {
+  if (pg.isConfigured()) return pg.writeStore(db);
+  return writeToFile(db);
+}
+
+async function writeToFile(db: Database): Promise<boolean> {
   const task = writeQueue.then(async () => {
     try {
       await fs.mkdir(DATA_DIR, { recursive: true });
@@ -94,6 +118,9 @@ export async function writeDatabase(db: Database): Promise<boolean> {
 export async function mutate(
   fn: (db: Database) => void | Promise<void>,
 ): Promise<boolean> {
+  // Postgres does this in a transaction so concurrent edits cannot clobber.
+  if (pg.isConfigured()) return pg.mutateStore(fn);
+
   const db = await readDatabase();
   // Work on a copy so a failed write cannot leave a half-applied object cached.
   const next: Database = JSON.parse(JSON.stringify(db));
@@ -101,8 +128,13 @@ export async function mutate(
   return writeDatabase(next);
 }
 
-/** Whether the data directory can actually be written to on this host. */
+/** Whether changes made in the dashboard will actually persist. */
 export async function isWritable(): Promise<boolean> {
+  if (pg.isConfigured()) return true;
+  return isFileWritable();
+}
+
+async function isFileWritable(): Promise<boolean> {
   try {
     await fs.mkdir(DATA_DIR, { recursive: true });
     const probe = path.join(DATA_DIR, ".write-probe");

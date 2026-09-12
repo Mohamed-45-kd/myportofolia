@@ -181,11 +181,17 @@ export function AdminShell({
             <div className="alert alert-danger" role="alert">
               <Icon name="close" size={18} />
               <div>
-                <p style={{ fontWeight: 600 }}>Changes cannot be saved on this host</p>
+                <p style={{ fontWeight: 600 }}>Changes cannot be saved yet</p>
                 <p style={{ marginTop: 4 }}>
-                  The data directory is not writable, which is normal on a serverless
-                  runtime. Connect a database before using the dashboard in production —
-                  edits made now will be lost.
+                  This host has no writable disk, which is normal on a serverless
+                  runtime. Anything you edit now will be lost on the next request.
+                </p>
+                <p style={{ marginTop: 8 }}>
+                  <strong>To fix it:</strong> in the Vercel dashboard go to{" "}
+                  <strong>Storage → Create Database → Neon (Postgres)</strong> and
+                  connect it to this project. That sets <code>POSTGRES_URL</code>{" "}
+                  automatically. Redeploy and this banner disappears — your current
+                  content is copied into the database on first load.
                 </p>
               </div>
             </div>

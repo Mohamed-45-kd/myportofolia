@@ -13,3 +13,6 @@ tsconfig.tsbuildinfo
 # CMS store. Not committed: it holds visitor contact messages (personal data),
 # and the initial content is reproducible from src/content/*.ts.
 /data
+
+.vercel
+.env*

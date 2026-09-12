@@ -127,10 +127,16 @@ export async function saveProject(
       docs: str(formData, "docs") || undefined,
       video: str(formData, "video") || undefined,
     },
-    gallery: list(formData, "galleryUrl").map((src, i) => ({
-      src,
-      alt: formData.getAll("galleryAlt").map(String)[i]?.trim() || title,
-    })),
+    // Zip the two parallel field lists BEFORE discarding blanks, so a missing
+    // URL cannot shift every following description onto the wrong image.
+    gallery: formData
+      .getAll("galleryUrl")
+      .map((src, i) => ({
+        src: String(src).trim(),
+        alt: String(formData.getAll("galleryAlt")[i] ?? "").trim(),
+      }))
+      .filter((entry) => entry.src !== "")
+      .map((entry) => ({ src: entry.src, alt: entry.alt || title })),
   };
 
   const ok = id

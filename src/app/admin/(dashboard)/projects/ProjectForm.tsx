@@ -6,6 +6,7 @@ import { Icon } from "@/components/ui";
 import { saveProject, type ActionState } from "../../actions";
 import { SubmitButton } from "../../ConfirmButton";
 import { Field, Select, Switch } from "../../ui";
+import { GalleryUploader } from "./GalleryUploader";
 import type { ProjectRecord } from "@/lib/types";
 import type { ProjectStatus } from "@/content/types";
 
@@ -338,15 +339,7 @@ export function ProjectForm({
           <Field label="Demo video URL" name="video" defaultValue={project?.links?.video ?? ""} placeholder="https://…" type="url" />
         </div>
 
-        <RepeatablePairs
-          label="Gallery images"
-          keyName="galleryUrl"
-          valueName="galleryAlt"
-          keyPlaceholder="/projects/kaabe-dashboard.png"
-          valuePlaceholder="Describe the image"
-          initial={(project?.gallery ?? []).map((g) => ({ k: g.src, v: g.alt }))}
-          hint="Put files in public/ and reference them by path. Leave empty to show the grid placeholder."
-        />
+        <GalleryUploader initial={project?.gallery ?? []} />
       </section>
 
       <div className="form-sticky">

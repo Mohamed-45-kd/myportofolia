@@ -29,22 +29,50 @@ a different password.
 
 After adding them, redeploy: `npx vercel --prod`
 
-## Known limitation on Vercel
+## Making the dashboard save (required for the CMS to work live)
 
-Vercel's serverless filesystem is read-only and ephemeral, so on the live site:
+Vercel has no writable disk, so without a database the dashboard cannot persist
+anything. Connecting one takes about a minute:
 
-- The public portfolio works fully. Content is baked in at build time from
-  `src/content/*.ts`.
-- **Dashboard edits will not persist.** They appear to work for the current
-  request, then vanish.
-- **Contact messages will not be stored.** The form tells the visitor to email
-  instead rather than pretending it worked.
+1. Vercel dashboard → your project → **Storage**
+2. **Create Database** → **Neon (Postgres)** → **Connect**
+3. Redeploy: `npx vercel --prod`
 
-To make the dashboard fully work in production, either deploy somewhere with a
-persistent disk (Railway, Render, a VPS), or connect Supabase by replacing
-`readDatabase` / `writeDatabase` in `src/lib/db.ts`. Everything already goes
-through `src/lib/repo.ts`, so nothing else changes.
+That injects `POSTGRES_URL` automatically — nothing to copy by hand. On the
+first dashboard load the app creates its table and copies the current content
+into it, so nothing is lost.
 
-For today's deadline: deploy as-is. The public site — which is what visitors
-see — is complete and correct. Edit content in `src/content/*.ts` and redeploy
-until the database is connected.
+To confirm a connection string works before deploying:
+
+```bash
+npm run db:check
+```
+
+It connects, creates the table, writes a probe row, reads it back and deletes
+it, then tells you exactly what failed if anything did.
+
+### Any other Postgres works too
+
+Supabase, Railway, Render or your own server: set `DATABASE_URL` to the
+connection string. The app checks `DATABASE_URL`, `POSTGRES_URL`,
+`POSTGRES_PRISMA_URL` and `POSTGRES_URL_NON_POOLING`, in that order.
+
+TLS verification is relaxed by default because managed poolers commonly present
+chains that fail strict verification. If your provider has a properly verifiable
+certificate, set `DATABASE_SSL_STRICT=true` to tighten it.
+
+### How the data is stored
+
+The whole content document lives in one JSONB row in a table called
+`app_state`. That is a deliberate shortcut rather than the relational schema in
+§25 of the documentation: no migrations, no ORM, and `repo.ts` did not change,
+so the dashboard started persisting immediately. Writes run inside a
+transaction with `SELECT ... FOR UPDATE`, so concurrent edits queue rather than
+overwrite. Splitting it into real tables is still worth doing later, and stays a
+contained change because everything goes through `repo.ts`.
+
+## Local development
+
+With no connection string set, the app uses `data/content.json` on disk. That
+keeps a fresh clone working with zero setup. Set `DATABASE_URL` locally if you
+want to develop against the same database the live site uses.

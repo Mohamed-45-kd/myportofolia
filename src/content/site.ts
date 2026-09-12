@@ -8,6 +8,55 @@
 
 import type { IconName } from "./types";
 
+/**
+ * Resolves the canonical site origin.
+ *
+ * `??` is not enough here: a platform can supply the variable as an EMPTY
+ * STRING, which passes the nullish check and then blows up in `new URL("")`.
+ * That is exactly what broke the first Vercel build. So each candidate is
+ * trimmed, checked, given a protocol if missing, and parsed before use — and
+ * Vercel's own deployment URL is used automatically when nothing is set, so a
+ * deploy produces correct canonical URLs with zero configuration.
+ */
+function resolveSiteUrl(): string {
+  // On a deployed host, a localhost value is always a copy-paste leftover from
+  // local config. Trusting it publishes canonical URLs, og:url tags and a whole
+  // sitemap pointing at 127.0.0.1 — which is exactly what happened on the first
+  // production deploy. So it is ignored when we know we are deployed.
+  const isDeployed =
+    process.env.VERCEL === "1" || process.env.NODE_ENV === "production";
+  const isLoopback = (url: URL) =>
+    ["localhost", "127.0.0.1", "[::1]", "0.0.0.0"].includes(url.hostname);
+
+  const candidates = [
+    process.env.NEXT_PUBLIC_SITE_URL,
+    process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL,
+    process.env.VERCEL_PROJECT_PRODUCTION_URL,
+    process.env.NEXT_PUBLIC_VERCEL_URL,
+    process.env.VERCEL_URL,
+  ];
+
+  for (const candidate of candidates) {
+    const trimmed = candidate?.trim();
+    if (!trimmed) continue;
+
+    const withProtocol = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+
+    let parsed: URL;
+    try {
+      parsed = new URL(withProtocol);
+    } catch {
+      continue; // Malformed — try the next rather than failing the build.
+    }
+
+    if (isDeployed && isLoopback(parsed)) continue;
+
+    return parsed.origin;
+  }
+
+  return "https://mohamedwelijama.com";
+}
+
 export const site = {
   name: "Mohamed Weli Jama",
   shortName: "MWJ",
@@ -16,7 +65,7 @@ export const site = {
   mission: "My mission is to digitalize our Country.",
   tagline: "I build software that solves real problems — and keeps working after handover.",
   location: "Somaliland",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://mohamedwelijama.com",
+  url: resolveSiteUrl(),
 
   description:
     "Mohamed Weli Jama is a software and web developer building school management systems, ordering platforms and custom management software. Mission: to digitalize our Country.",
