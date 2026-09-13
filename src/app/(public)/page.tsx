@@ -17,7 +17,8 @@ import {
   SectionHeading,
   Stat,
 } from "@/components/ui";
-import { ContactCTA, ProjectCard } from "@/components/sections/shared";
+import { ProjectCard } from "@/components/sections/shared";
+import { ContactCTA } from "@/components/sections/ContactCTA";
 import { Reveal } from "@/components/layout/Reveal";
 
 /* ---------------- Hero ---------------- */

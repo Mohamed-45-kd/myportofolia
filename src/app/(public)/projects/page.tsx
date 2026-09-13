@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getPublishedProjects } from "@/lib/repo";
-import { ContactCTA, PageHeader } from "@/components/sections/shared";
+import { PageHeader } from "@/components/sections/shared";
+import { ContactCTA } from "@/components/sections/ContactCTA";
 import { ProjectGallery } from "./ProjectGallery";
 
 export const metadata: Metadata = {

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import type { Project } from "@/content/types";
 import { Card, Icon, StatusBadge, TagList, ButtonLink } from "@/components/ui";
-import { site } from "@/content/site";
 
 /* ---------------- Page header ---------------- */
 
@@ -148,66 +147,3 @@ export function SkillMeter({ name, level }: { name: string; level: number }) {
 }
 
 /* ---------------- Contact CTA band ---------------- */
-
-export function ContactCTA() {
-  return (
-    <section className="section-tight">
-      <div className="shell">
-        <div
-          className="card"
-          style={{
-            position: "relative",
-            overflow: "hidden",
-            padding: "clamp(32px, 6vw, 64px)",
-            textAlign: "center",
-          }}
-        >
-          <div className="hero-glow" aria-hidden="true" />
-          <div style={{ position: "relative" }}>
-            <p className="eyebrow">Next step</p>
-            <h2
-              style={{
-                fontSize: "clamp(28px, 4vw, 44px)",
-                marginTop: "var(--space-4)",
-                maxWidth: 620,
-                marginInline: "auto",
-              }}
-            >
-              Have something that should be{" "}
-              <span className="gradient-text">a system instead of a spreadsheet?</span>
-            </h2>
-            <p
-              className="prose-body"
-              style={{
-                marginTop: "var(--space-5)",
-                marginInline: "auto",
-                textAlign: "center",
-              }}
-            >
-              Tell me what the process looks like today. If I am the right person to
-              build it, I will say so — and if I am not, I will say that too.
-            </p>
-            <div
-              style={{
-                display: "flex",
-                gap: "var(--space-3)",
-                justifyContent: "center",
-                flexWrap: "wrap",
-                marginTop: "var(--space-8)",
-              }}
-            >
-              <ButtonLink href="/contact" size="lg">
-                Let&apos;s work together
-                <Icon name="arrow-right" size={16} />
-              </ButtonLink>
-              <ButtonLink href={`mailto:${site.contact.email}`} variant="secondary" size="lg">
-                <Icon name="mail" size={16} />
-                Email me directly
-              </ButtonLink>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}

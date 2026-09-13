@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { getSkillGroups } from "@/lib/repo";
 import { Card, IconBubble } from "@/components/ui";
-import { ContactCTA, PageHeader, SkillMeter } from "@/components/sections/shared";
+import { PageHeader, SkillMeter } from "@/components/sections/shared";
+import { ContactCTA } from "@/components/sections/ContactCTA";
 import { Reveal } from "@/components/layout/Reveal";
 
 export const metadata: Metadata = {

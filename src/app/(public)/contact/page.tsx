@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { site, socials } from "@/content/site";
+import { site } from "@/content/site";
+import { getContact, socialsFor } from "@/lib/contact";
 import { Card, Icon } from "@/components/ui";
 import { PageHeader } from "@/components/sections/shared";
 import { ContactForm } from "./ContactForm";
@@ -11,7 +12,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const contact = await getContact();
+  const socials = socialsFor(contact);
   return (
     <>
       <PageHeader

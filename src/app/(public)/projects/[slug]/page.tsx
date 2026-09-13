@@ -12,7 +12,8 @@ import {
   StatusBadge,
   TagList,
 } from "@/components/ui";
-import { ContactCTA, ProjectCard } from "@/components/sections/shared";
+import { ProjectCard } from "@/components/sections/shared";
+import { ContactCTA } from "@/components/sections/ContactCTA";
 
 type Params = { params: Promise<{ slug: string }> };
 

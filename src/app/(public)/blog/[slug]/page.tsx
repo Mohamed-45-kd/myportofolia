@@ -6,7 +6,7 @@ import { jsonLd } from "@/lib/jsonld";
 import { getPostBySlug, getPublishedPosts } from "@/lib/repo";
 import { site } from "@/content/site";
 import { Badge, Icon } from "@/components/ui";
-import { ContactCTA } from "@/components/sections/shared";
+import { ContactCTA } from "@/components/sections/ContactCTA";
 
 type Params = { params: Promise<{ slug: string }> };
 

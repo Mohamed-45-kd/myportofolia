@@ -71,10 +71,12 @@ export const site = {
     "Mohamed Weli Jama is a software and web developer building school management systems, ordering platforms and custom management software. Mission: to digitalize our Country.",
 
   contact: {
-    email: "hello@mohamedwelijama.com", // TODO: replace with the real address
-    whatsapp: "https://wa.me/000000000000", // TODO: replace with the real number
+    email: "mohwelijama@gmail.com",
+    /** +252 63 7840256 — wa.me needs digits only, no "+" and no spaces. */
+    whatsapp: "https://wa.me/252637840256",
+    whatsappDisplay: "+252 63 7840256",
     github: "https://github.com/Mohamed-45-kd",
-    linkedin: "https://linkedin.com/in/mohamed-weli-jama", // TODO: confirm handle
+    linkedin: "https://www.linkedin.com/in/moh-weli-jama-1b174433b/",
   },
 
   /** Optional CV download — drop the file at public/mohamed-weli-jama-cv.pdf to enable. */

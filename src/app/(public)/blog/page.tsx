@@ -3,7 +3,8 @@ import Link from "next/link";
 import { formatPostDate } from "@/content/posts";
 import { getPublishedPosts } from "@/lib/repo";
 import { Badge, Card, Icon } from "@/components/ui";
-import { ContactCTA, PageHeader } from "@/components/sections/shared";
+import { PageHeader } from "@/components/sections/shared";
+import { ContactCTA } from "@/components/sections/ContactCTA";
 import { Reveal } from "@/components/layout/Reveal";
 
 export const metadata: Metadata = {

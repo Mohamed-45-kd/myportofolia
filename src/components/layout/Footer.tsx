@@ -1,9 +1,11 @@
 import Link from "next/link";
-import { nav, site, socials } from "@/content/site";
+import { nav, site } from "@/content/site";
+import { getContact, socialsFor } from "@/lib/contact";
 import { Icon } from "@/components/ui/Icon";
 
-export function Footer() {
+export async function Footer() {
   const year = new Date().getFullYear();
+  const socials = socialsFor(await getContact());
 
   return (
     <footer className="footer">
