@@ -1,29 +1,30 @@
 import type { Metadata, Viewport } from "next";
-import { Space_Grotesk, Manrope, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { themeScript } from "@/components/layout/ThemeToggle";
 import { site } from "@/content/site";
 import { jsonLd } from "@/lib/jsonld";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-space-grotesk",
+/**
+ * Self-hosted rather than fetched from Google Fonts at build time.
+ *
+ * Two reasons: a build should not fail because fonts.googleapis.com is
+ * unreachable (it already did, twice), and visitors on slow connections skip a
+ * third-party DNS lookup, handshake and round trip before any text renders.
+ * Latin subset only — the site is English — which keeps all five weights to
+ * about 94 KB total.
+ */
+const kanit = localFont({
+  src: [
+    { path: "./fonts/Kanit-300.woff2", weight: "300", style: "normal" },
+    { path: "./fonts/Kanit-400.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/Kanit-500.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/Kanit-700.woff2", weight: "700", style: "normal" },
+    { path: "./fonts/Kanit-900.woff2", weight: "900", style: "normal" },
+  ],
+  variable: "--font-kanit",
   display: "swap",
-});
-
-const manrope = Manrope({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-manrope",
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  variable: "--font-jetbrains-mono",
-  display: "swap",
+  fallback: ["system-ui", "sans-serif"],
 });
 
 export const metadata: Metadata = {
@@ -69,8 +70,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#05070B" },
-    { media: "(prefers-color-scheme: light)", color: "#F8FAFC" },
+    { media: "(prefers-color-scheme: dark)", color: "#0C0C0C" },
+    { media: "(prefers-color-scheme: light)", color: "#F4F5F6" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -98,7 +99,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${manrope.variable} ${jetbrainsMono.variable}`}
+      className={kanit.variable}
       suppressHydrationWarning
     >
       <head>

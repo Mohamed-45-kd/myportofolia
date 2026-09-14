@@ -11,7 +11,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-pill);
   border: 1px solid transparent;
   font-family: var(--font-body);
   font-weight: var(--weight-semibold);
@@ -32,26 +32,33 @@
 .btn:disabled { opacity: .45; cursor: not-allowed; }
 
 .btn-sm { height: 36px; padding: 0 var(--space-4); font-size: var(--text-xs); }
-.btn-lg { height: 52px; padding: 0 var(--space-7); font-size: var(--text-base); }
+.btn-lg { height: 56px; padding: 0 var(--space-9); font-size: var(--text-base); }
 
 .btn-primary {
   background: var(--gradient-brand);
   color: #FFFFFF;
+  border-radius: var(--radius-pill);
+  outline: 2px solid #FFFFFF;
+  outline-offset: -3px;
   box-shadow: var(--glow-brand);
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
 }
 .btn-primary:hover { transform: var(--lift-hover); box-shadow: var(--glow-brand-strong); }
 .btn-primary:active { transform: var(--press-scale); }
 
+/* Ghost pill — the reference's "Live Project" control. */
 .btn-secondary {
-  background: var(--surface-card);
+  background: transparent;
   color: var(--text-primary);
-  border-color: var(--border-subtle);
-  box-shadow: var(--inset-hairline);
+  border: 2px solid var(--text-primary);
+  border-radius: var(--radius-pill);
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
 }
 .btn-secondary:hover {
   transform: var(--lift-hover);
-  background: var(--surface-hover);
-  border-color: var(--border-strong);
+  background: color-mix(in srgb, var(--text-primary) 10%, transparent);
 }
 .btn-secondary:active { transform: var(--press-scale); }
 
@@ -189,12 +196,14 @@
   position: relative;
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-sm);
-  font-size: var(--text-sm);
+  font-size: clamp(0.875rem, 1.1vw, 1.4rem);
   font-weight: var(--weight-medium);
-  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--track-wide);
+  color: var(--text-primary);
   transition: color var(--dur-fast) var(--ease-standard), background-color var(--dur-fast) var(--ease-standard);
 }
-.nav-link:hover { color: var(--text-primary); background: var(--surface-hover); }
+.nav-link:hover { opacity: .7; background: transparent; }
 .nav-link-active { color: var(--text-primary); }
 .nav-link-active::after {
   content: "";
@@ -204,7 +213,7 @@
   bottom: -2px;
   height: 2px;
   border-radius: var(--radius-pill);
-  background: var(--gradient-brand);
+  background: var(--text-primary);
 }
 
 /* Mobile menu */
@@ -376,10 +385,10 @@
 .input:focus, .textarea:focus, .select:focus {
   outline: none;
   border-color: var(--brand-primary);
-  box-shadow: 0 0 0 3px rgba(10,132,255,.18);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--text-accent) 22%, transparent);
 }
 .input:focus-visible, .textarea:focus-visible, .select:focus-visible {
-  box-shadow: 0 0 0 3px rgba(10,132,255,.18);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--text-accent) 22%, transparent);
 }
 .field-error { color: var(--danger-500); font-size: var(--text-xs); }
 .input-invalid { border-color: var(--danger-500); }
@@ -396,7 +405,7 @@
 }
 .alert-success { background: var(--success-surface); border-color: rgba(34,211,154,.3); color: var(--success-500); }
 .alert-danger  { background: var(--danger-surface);  border-color: rgba(255,77,94,.3);  color: var(--danger-500); }
-.alert-info    { background: var(--info-surface);    border-color: rgba(0,194,255,.3);  color: var(--info-500); }
+.alert-info    { background: var(--info-surface);    border-color: color-mix(in srgb, var(--info-500) 35%, transparent);  color: var(--info-500); }
 
 /* ---------- Filter pills ---------- */
 .filter-row { display: flex; flex-wrap: wrap; gap: var(--space-2); }
@@ -413,7 +422,7 @@
   transition: color var(--dur-fast) var(--ease-standard), border-color var(--dur-base) var(--ease-standard), background-color var(--dur-fast) var(--ease-standard);
 }
 .filter-pill:hover { color: var(--text-primary); border-color: var(--border-strong); }
-.filter-pill-active { color: var(--text-primary); border-color: var(--border-brand); background: rgba(10,132,255,.12); }
+.filter-pill-active { color: var(--text-primary); border-color: var(--border-brand); background: color-mix(in srgb, var(--text-primary) 12%, transparent); }
 
 /* ---------- Footer ---------- */
 .footer { border-top: 1px solid var(--border-subtle); background: var(--bg-subtle); padding-block: var(--space-11) var(--space-7); }
@@ -479,71 +488,130 @@
   .logo-name { font-size: var(--text-xs); }
 }
 
-/* ---------- Hero with portrait ---------- */
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(40px, 6vw, 72px);
-  align-items: center;
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: clip;
+  padding-top: var(--nav-h);
 }
-@media (min-width: 900px) {
-  .hero-grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); }
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding-top: clamp(16px, 3vw, 40px);
+  pointer-events: none;
+}
+.hero-inner a,
+.hero-inner button { pointer-events: auto; }
+
+/* The statement line. It scales with the viewport and never wraps — that is
+   what produces the reference's edge-to-edge scale. */
+.hero-title-wrap { overflow: hidden; width: 100%; }
+.hero-title {
+  font-size: var(--text-hero);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 0.82;
+  white-space: nowrap;
+  width: 100%;
+  text-align: center;
+  margin-top: clamp(8px, 1.5vw, 24px);
+}
+.hero-mission {
+  font-family: var(--font-display);
+  font-weight: var(--weight-regular);
+  font-size: clamp(10px, 1.2vw, 14px);
+  letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-accent);
 }
 
-.hero-portrait { justify-self: center; width: 100%; max-width: 420px; }
-@media (min-width: 900px) { .hero-portrait { justify-self: end; } }
+.hero-bottom {
+  margin-top: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding-bottom: clamp(28px, 4vw, 56px);
+}
+.hero-blurb {
+  color: var(--text-primary);
+  font-weight: var(--weight-light);
+  text-transform: uppercase;
+  letter-spacing: var(--track-wide);
+  line-height: 1.35;
+  font-size: clamp(0.75rem, 1.4vw, 1.5rem);
+  max-width: 160px;
+}
+@media (min-width: 640px) { .hero-blurb { max-width: 220px; } }
+@media (min-width: 768px) { .hero-blurb { max-width: 300px; } }
+
+/* Portrait sits centred and bottom-anchored, behind the bottom bar. */
+.hero-portrait {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  width: clamp(260px, 42vw, 520px);
+  top: 50%;
+  margin-top: -8%;
+}
+@media (min-width: 640px) {
+  .hero-portrait { top: auto; bottom: 0; margin-top: 0; }
+}
 
 .portrait-frame {
   position: relative;
-  border-radius: var(--radius-xl);
   overflow: hidden;
-  border: 1px solid var(--border-subtle);
-  background: var(--surface-card);
-  box-shadow: var(--shadow-lg), var(--inset-hairline), var(--glow-brand);
   aspect-ratio: 4 / 5;
+  /* Feathered rather than framed, so the figure emerges from the background. */
+  -webkit-mask-image: radial-gradient(66% 70% at 50% 40%, #000 38%, transparent 92%);
+  mask-image: radial-gradient(66% 70% at 50% 40%, #000 38%, transparent 92%);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
 }
-/* Brand wash: cools the warm greens toward the palette without wrecking the photo. */
+.portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 12%;
+  display: block;
+  /* The photo has a bright green backdrop; pulled right down so the subject
+     reads and the surroundings sink into the graphite ground. */
+  /* Duotone rather than desaturation: the leafy backdrop goes fully greyscale
+     and the magenta wash above tints it, so the photo reads as part of the
+     palette instead of a green rectangle pasted onto it. */
+  filter: grayscale(1) contrast(1.08) brightness(.82);
+}
+/* Cools the warm background toward the palette and fades the base into the page. */
 .portrait-frame::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(5,7,11,0) 45%, rgba(5,7,11,.72) 100%),
-    linear-gradient(145deg, rgba(10,132,255,.20) 0%, rgba(0,194,255,.10) 55%, rgba(5,7,11,0) 100%);
-}
-.portrait-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 18%;
-  display: block;
-  filter: saturate(.88) contrast(1.04);
-}
-.portrait-tag {
-  position: absolute;
-  left: var(--space-5);
-  bottom: var(--space-5);
-  z-index: 1;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-pill);
-  background: rgba(5,7,11,.66);
-  backdrop-filter: var(--blur-sm);
-  -webkit-backdrop-filter: var(--blur-sm);
-  border: 1px solid rgba(248,250,252,.14);
-  font-family: var(--font-mono);
-  font-size: var(--text-2xs);
-  letter-spacing: var(--track-eyebrow);
-  text-transform: uppercase;
-  color: #F8FAFC;
+    linear-gradient(180deg, rgba(12,12,12,0) 42%, rgba(12,12,12,.92) 92%),
+    linear-gradient(145deg, rgba(118,33,176,.28) 0%, rgba(12,12,12,0) 62%);
 }
 [data-theme="light"] .portrait-frame::after {
   background:
-    linear-gradient(180deg, rgba(5,7,11,0) 55%, rgba(5,7,11,.55) 100%),
-    linear-gradient(145deg, rgba(0,102,255,.14) 0%, rgba(0,194,255,.06) 55%, rgba(5,7,11,0) 100%);
+    linear-gradient(180deg, rgba(244,245,246,0) 55%, rgba(244,245,246,.9) 100%),
+    linear-gradient(145deg, rgba(118,33,176,.12) 0%, rgba(244,245,246,0) 60%);
+}
+
+/* ---------- Numbers strip ---------- */
+.numbers-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(32px, 6vw, 72px);
+  padding-top: clamp(32px, 5vw, 56px);
+  padding-bottom: clamp(8px, 2vw, 24px);
 }
 
 /* ---------- Scroll-stacking project cards ---------- */
@@ -625,3 +693,79 @@
   background: var(--surface-inset);
 }
 .marquee-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ---------- Services panel (light block) ---------- */
+.services-panel {
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+  color: #0C0C0C;
+  border-radius: 40px 40px 0 0;
+  padding-block: clamp(56px, 9vw, 128px);
+}
+@media (min-width: 640px) { .services-panel { border-radius: 50px 50px 0 0; } }
+@media (min-width: 768px) { .services-panel { border-radius: 60px 60px 0 0; } }
+
+.panel-heading {
+  font-size: clamp(3rem, 12vw, 160px);
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  text-align: center;
+  color: #0C0C0C;
+  margin-bottom: clamp(48px, 8vw, 112px);
+}
+
+.service-list { max-width: 1024px; margin-inline: auto; }
+.service-row {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(16px, 4vw, 48px);
+  padding-block: clamp(24px, 4vw, 48px);
+  border-top: 1px solid rgba(12, 12, 12, 0.15);
+  color: #0C0C0C;
+  transition: opacity var(--dur-base) var(--ease-standard);
+}
+.service-list > *:last-child .service-row { border-bottom: 1px solid rgba(12, 12, 12, 0.15); }
+.service-row:hover { opacity: 0.65; }
+
+.service-number {
+  font-weight: 900;
+  font-size: clamp(2.25rem, 10vw, 140px);
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  flex-shrink: 0;
+}
+.service-body { display: flex; flex-direction: column; gap: var(--space-3); padding-top: 0.4em; }
+.service-name {
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--track-snug);
+  font-size: clamp(1rem, 2.2vw, 2.1rem);
+  line-height: 1.1;
+}
+.service-desc {
+  font-weight: var(--weight-light);
+  line-height: var(--leading-relaxed);
+  max-width: 42rem;
+  font-size: clamp(0.85rem, 1.6vw, 1.25rem);
+  opacity: 0.6;
+}
+
+/* ---------- Projects panel (dark, pulled over the light block) ---------- */
+.projects-panel {
+  position: relative;
+  z-index: 2;
+  background: var(--bg-base);
+  border-radius: 40px 40px 0 0;
+  margin-top: -40px;
+  padding-block: clamp(56px, 9vw, 128px);
+}
+@media (min-width: 640px) { .projects-panel { border-radius: 50px 50px 0 0; margin-top: -48px; } }
+@media (min-width: 768px) { .projects-panel { border-radius: 60px 60px 0 0; margin-top: -56px; } }
+.projects-panel .panel-heading {
+  background: var(--gradient-text);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+}

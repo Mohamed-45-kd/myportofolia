@@ -17,7 +17,6 @@ import {
   SectionHeading,
   Stat,
 } from "@/components/ui";
-import { ProjectCard } from "@/components/sections/shared";
 import { ContactCTA } from "@/components/sections/ContactCTA";
 import { Reveal } from "@/components/layout/Reveal";
 import { Magnet } from "@/components/motion/Magnet";
@@ -27,6 +26,59 @@ import { StackedProjects } from "@/components/motion/StackedProjects";
 /* ---------------- Hero ---------------- */
 
 async function Hero() {
+  return (
+    <section className="hero">
+      <div className="hero-glow" aria-hidden="true" />
+      <div className="grid-texture" aria-hidden="true" />
+
+      <div className="hero-inner">
+        <div className="shell">
+          <p className="hero-mission rise">{site.mission}</p>
+        </div>
+
+        {/* Full-bleed statement. Kept on one line at every width, which is what
+            gives the reference its scale — the type shrinks, it never wraps. */}
+        <div className="hero-title-wrap">
+          <h1 className="hero-title gradient-text rise" style={{ animationDelay: "60ms" }}>
+            hi, i&apos;m mohamed
+          </h1>
+        </div>
+
+        <div className="shell hero-bottom">
+          <p className="hero-blurb rise" style={{ animationDelay: "350ms" }}>
+            a software &amp; web developer building the systems that replace a
+            paper register
+          </p>
+          <div className="rise" style={{ animationDelay: "500ms" }}>
+            <ButtonLink href="/contact" size="lg">
+              Contact me
+            </ButtonLink>
+          </div>
+        </div>
+      </div>
+
+      <div className="hero-portrait rise" style={{ animationDelay: "600ms" }}>
+        <Magnet padding={150} strength={3}>
+          <div className="portrait-frame">
+            <Image
+              src="/brand/mohamed-weli-jama.jpg"
+              alt={`${site.name}, ${site.role}`}
+              width={960}
+              height={1280}
+              priority
+              sizes="(max-width: 900px) 70vw, 520px"
+              className="portrait-img"
+            />
+          </div>
+        </Magnet>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Numbers strip ---------------- */
+
+async function Numbers() {
   const [publishedProjects, services, skillGroups] = await Promise.all([
     getPublishedProjects(),
     getServices(),
@@ -34,120 +86,13 @@ async function Hero() {
   ]);
 
   return (
-    <section className="hero">
-      <div className="hero-glow" aria-hidden="true" />
-      <div className="grid-texture" aria-hidden="true" />
-
-      <div className="shell" style={{ position: "relative" }}>
-        <div className="hero-grid">
-          <div>
-        <p className="hero-mission rise">{site.mission}</p>
-
-        <h1
-          className="hero-title rise"
-          style={{ marginTop: "var(--space-6)", animationDelay: "60ms" }}
-        >
-          {site.name}
-        </h1>
-
-        <p
-          className="rise"
-          style={{
-            marginTop: "var(--space-5)",
-            fontSize: "clamp(20px, 2.6vw, 30px)",
-            fontFamily: "var(--font-display)",
-            fontWeight: "var(--weight-medium)",
-            letterSpacing: "var(--track-snug)",
-            color: "var(--text-secondary)",
-            animationDelay: "120ms",
-          }}
-        >
-          Software Developer &amp; Web Developer{" "}
-          <span className="code-glyph" aria-hidden="true">
-            &lt;/&gt;
-          </span>
-        </p>
-
-        <p
-          className="prose-body rise"
-          style={{ marginTop: "var(--space-7)", animationDelay: "180ms" }}
-        >
-          I build management systems, ordering platforms and the software that
-          replaces a paper register. Most of my work is for schools and small
-          organisations here — the places where the process still runs on exercise
-          books and someone&apos;s memory. My job is to make that process a system
-          that keeps working after I hand it over.
-        </p>
-
-        <div
-          className="rise"
-          style={{
-            display: "flex",
-            gap: "var(--space-3)",
-            flexWrap: "wrap",
-            marginTop: "var(--space-9)",
-            animationDelay: "240ms",
-          }}
-        >
-          <ButtonLink href="/projects" size="lg">
-            View my projects
-            <Icon name="arrow-right" size={16} />
-          </ButtonLink>
-          <ButtonLink href="/contact" variant="secondary" size="lg">
-            Let&apos;s work together
-          </ButtonLink>
-          {site.cv.enabled ? (
-            <ButtonLink href={site.cv.href} variant="ghost" size="lg" external>
-              <Icon name="download" size={16} />
-              Download CV
-            </ButtonLink>
-          ) : null}
-        </div>
-
-        <div
-          className="rise"
-          style={{
-            display: "flex",
-            gap: "clamp(32px, 6vw, 72px)",
-            flexWrap: "wrap",
-            marginTop: "var(--space-11)",
-            paddingTop: "var(--space-8)",
-            borderTop: "1px solid var(--border-subtle)",
-            animationDelay: "300ms",
-          }}
-        >
-          <Stat value={String(publishedProjects.length)} label="Projects shipped or in build" />
-          <Stat value={String(services.length)} label="Services offered" />
-          <Stat
-            value={String(skillGroups.reduce((n, g) => n + g.items.length, 0))}
-            label="Technologies in use"
-          />
-            </div>
-          </div>
-
-          {/* Portrait. Framed as a card so it reads as part of the system
-              rather than a photo dropped onto the page. */}
-          <div className="hero-portrait rise" style={{ animationDelay: "200ms" }}>
-            <Magnet padding={150} strength={3}>
-            <div className="portrait-frame">
-              <Image
-                src="/brand/mohamed-weli-jama.jpg"
-                alt={`${site.name}, ${site.role}`}
-                width={960}
-                height={1280}
-                priority
-                sizes="(max-width: 900px) 70vw, 420px"
-                className="portrait-img"
-              />
-              <span className="portrait-tag">
-                <span className="code-glyph" aria-hidden="true">&lt;/&gt;</span>
-                {site.location}
-              </span>
-            </div>
-            </Magnet>
-          </div>
-        </div>
-      </div>
+    <section className="shell numbers-strip">
+      <Stat value={String(publishedProjects.length)} label="Projects shipped or in build" />
+      <Stat value={String(services.length)} label="Services offered" />
+      <Stat
+        value={String(skillGroups.reduce((n, g) => n + g.items.length, 0))}
+        label="Technologies in use"
+      />
     </section>
   );
 }
@@ -172,20 +117,15 @@ async function FeaturedWork() {
   const featuredProjects = await getFeaturedProjects();
 
   return (
-    <section className="section">
+    <section className="projects-panel">
       <div className="shell">
-        <SectionHeading
-          eyebrow="01 — Selected work"
-          title={
-            <>
-              Projects that <span className="gradient-text">solve a real problem</span>
-            </>
-          }
-          lead="Each one started as a process someone was doing by hand. Open a case study for the problem, the approach and what it does now."
-          action={<ArrowLink href="/projects">All projects</ArrowLink>}
-        />
+        <h2 className="panel-heading">Projects</h2>
 
         <StackedProjects projects={featuredProjects} />
+
+        <div style={{ display: "flex", justifyContent: "center", marginTop: "var(--space-11)" }}>
+          <ArrowLink href="/projects">All projects</ArrowLink>
+        </div>
       </div>
     </section>
   );
@@ -350,35 +290,21 @@ async function ServicesTeaser() {
   const services = await getServices();
 
   return (
-    <section className="section" style={{ background: "var(--bg-subtle)" }}>
+    <section className="services-panel">
       <div className="shell">
-        <SectionHeading
-          eyebrow="04 — Services"
-          title="How I can help"
-          lead="Six ways I work with schools, businesses and organisations."
-          action={<ArrowLink href="/services">All services</ArrowLink>}
-        />
+        <h2 className="panel-heading">Services</h2>
 
-        <div className="grid-cards">
+        <div className="service-list">
           {services.map((service, i) => (
-            <Reveal key={service.slug} delay={i * 50}>
-              <Link href="/services" style={{ display: "block", height: "100%" }}>
-                <Card interactive>
-                  <IconBubble name={service.icon} />
-                  <h3 style={{ fontSize: "var(--text-md)", marginTop: "var(--space-5)" }}>
-                    {service.title}
-                  </h3>
-                  <p
-                    style={{
-                      marginTop: "var(--space-3)",
-                      fontSize: "var(--text-sm)",
-                      color: "var(--text-muted)",
-                      lineHeight: "var(--leading-normal)",
-                    }}
-                  >
-                    {service.body}
-                  </p>
-                </Card>
+            <Reveal key={service.slug} delay={i * 80}>
+              <Link href="/services" className="service-row">
+                <span className="service-number">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="service-body">
+                  <span className="service-name">{service.title}</span>
+                  <span className="service-desc">{service.body}</span>
+                </span>
               </Link>
             </Reveal>
           ))}
@@ -392,12 +318,13 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <Numbers />
       <ScreenshotMarquee />
-      <FeaturedWork />
-      <SkillsOverview />
       <MissionStrip />
+      <SkillsOverview />
       <SelectedAchievements />
       <ServicesTeaser />
+      <FeaturedWork />
       <ContactCTA />
     </>
   );

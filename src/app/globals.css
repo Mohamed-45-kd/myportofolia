@@ -33,49 +33,52 @@
   --info-500:#00C2FF;    --info-surface:rgba(0,194,255,.12);
 
   /* Semantic aliases — dark is the default theme */
-  --bg-base:#05070B;
-  --bg-subtle:#0B111A;
-  --surface-raised:#0B111A;
-  --surface-card:#111A27;
-  --surface-inset:#0B111A;
-  --surface-hover:#16202F;
-  --surface-overlay:rgba(5,7,11,.72);
+  --bg-base:#0C0C0C;
+  --bg-subtle:#101010;
+  --surface-raised:#141414;
+  --surface-card:#151515;
+  --surface-inset:#111111;
+  --surface-hover:#1C1C1C;
+  --surface-overlay:rgba(12,12,12,.72);
 
-  --text-primary:#F8FAFC;
-  --text-secondary:#CBD5E1;
-  --text-muted:#94A3B8;
-  --text-faint:#64748B;
-  --text-on-brand:#05070B;
-  --text-link:#0A84FF;
-  --text-link-hover:#00C2FF;
+  --text-primary:#D7E2EA;
+  --text-secondary:#B4C0C9;
+  --text-muted:#8A939B;
+  --text-faint:#646973;
+  --text-on-brand:#FFFFFF;
+  --text-link:#D7E2EA;
+  --text-link-hover:#FFFFFF;
   /* Accent used for TEXT and icons. Separate from --brand-accent (a fixed brand
      value) so the light theme can deepen it to clear 4.5:1 on white, per the
      design system's accessibility rule. */
-  --text-accent:#00C2FF;
+  --text-accent:#BBCCD7;
 
-  --border-subtle:#1E293B;
-  --border-strong:#334155;
-  --border-brand:rgba(10,132,255,.45);
-  --focus-ring:#00C2FF;
+  --border-subtle:#242424;
+  --border-strong:#3A3A3A;
+  --border-brand:rgba(215,226,234,.45);
+  --focus-ring:#BBCCD7;
 
   /* Signature gradients */
-  --gradient-brand:linear-gradient(135deg,#0066FF 0%,#0A84FF 48%,#00C2FF 100%);
-  --gradient-text:linear-gradient(100deg,#F8FAFC 0%,#94C7FF 55%,#00C2FF 100%);
-  --gradient-hero-glow:radial-gradient(60% 60% at 50% 0%,rgba(10,132,255,.22) 0%,rgba(5,7,11,0) 70%);
-  --gradient-card-edge:linear-gradient(160deg,rgba(248,250,252,.10) 0%,rgba(248,250,252,0) 45%);
-  --grid-line:rgba(30,41,59,.55);
+  /* CTA fill — the one saturated element in the system. */
+  --gradient-brand:linear-gradient(123deg,#18011F 7%,#B600A8 37%,#7621B0 72%,#BE4C00 100%);
+  /* Headings: brushed silver, top to bottom. */
+  --gradient-text:linear-gradient(180deg,#646973 0%,#BBCCD7 100%);
+  --gradient-hero-glow:radial-gradient(60% 60% at 50% 0%,rgba(118,33,176,.18) 0%,rgba(12,12,12,0) 70%);
+  --gradient-card-edge:linear-gradient(160deg,rgba(215,226,234,.10) 0%,rgba(215,226,234,0) 45%);
+  --grid-line:rgba(48,48,48,.55);
 
   /* Type */
-  --font-display:var(--font-space-grotesk),"Space Grotesk",system-ui,sans-serif;
-  --font-body:var(--font-manrope),"Manrope",system-ui,-apple-system,sans-serif;
-  --font-mono:var(--font-jetbrains-mono),"JetBrains Mono",ui-monospace,SFMono-Regular,monospace;
+  --font-display:var(--font-kanit),"Kanit",system-ui,sans-serif;
+  --font-body:var(--font-kanit),"Kanit",system-ui,-apple-system,sans-serif;
+  --font-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
 
   --text-2xs:11px; --text-xs:12px; --text-sm:14px; --text-base:16px; --text-md:18px;
   --text-lg:20px; --text-xl:24px; --text-2xl:30px; --text-3xl:38px; --text-4xl:48px;
   --text-5xl:60px; --text-6xl:76px;
-  --text-hero:clamp(44px,7vw,92px);
+  --text-hero:clamp(34px,10.2vw,190px);
 
   --leading-tight:1.05; --leading-snug:1.2; --leading-normal:1.5; --leading-relaxed:1.7;
+  --weight-light:300;
   --weight-regular:400; --weight-medium:500; --weight-semibold:600; --weight-bold:700; --weight-extrabold:800;
   --track-tight:-0.03em; --track-snug:-0.015em; --track-normal:0em; --track-wide:0.08em; --track-eyebrow:0.22em;
 
@@ -105,9 +108,9 @@
   --shadow-xl:0 40px 96px -24px rgba(2,6,16,.75);
   --inset-hairline:inset 0 1px 0 rgba(248,250,252,.06);
   --inset-hairline-strong:inset 0 1px 0 rgba(248,250,252,.12);
-  --glow-brand:0 0 0 1px rgba(10,132,255,.35),0 8px 28px -8px rgba(10,132,255,.55);
-  --glow-brand-strong:0 0 0 1px rgba(0,194,255,.5),0 14px 44px -10px rgba(10,132,255,.7);
-  --glow-accent:0 0 24px -4px rgba(0,194,255,.45);
+  --glow-brand:0px 4px 4px rgba(181,1,167,.25),4px 4px 12px #7721B1 inset;
+  --glow-brand-strong:0px 6px 18px rgba(181,1,167,.45),4px 4px 16px #7721B1 inset;
+  --glow-accent:0 0 24px -4px rgba(182,0,168,.45);
   --ring-focus:0 0 0 2px var(--bg-base),0 0 0 4px var(--focus-ring);
   --blur-sm:blur(8px); --blur-md:blur(16px); --blur-lg:blur(28px);
 
@@ -125,39 +128,39 @@
 
 /* Light theme — flips semantic aliases only */
 [data-theme="light"] {
-  --bg-base:#F8FAFC;
-  --bg-subtle:#F1F5F9;
+  --bg-base:#F4F5F6;
+  --bg-subtle:#EBECEE;
   --surface-raised:#FFFFFF;
   --surface-card:#FFFFFF;
-  --surface-inset:#F1F5F9;
-  --surface-hover:#EEF3F9;
-  --surface-overlay:rgba(15,23,42,.45);
+  --surface-inset:#F0F1F3;
+  --surface-hover:#E8EAEC;
+  --surface-overlay:rgba(12,12,12,.45);
 
-  --text-primary:#05070B;
-  --text-secondary:#334155;
-  --text-muted:#475569;
-  --text-faint:#94A3B8;
+  --text-primary:#0C0C0C;
+  --text-secondary:#2E3238;
+  --text-muted:#4C525A;
+  --text-faint:#7C838C;
   --text-on-brand:#FFFFFF;
-  --text-link:#0066FF;
-  --text-link-hover:#0A84FF;
-  --text-accent:#0066FF;
+  --text-link:#0C0C0C;
+  --text-link-hover:#7621B0;
+  --text-accent:#7621B0;
+
+  --border-subtle:rgba(12,12,12,.14);
+  --border-strong:rgba(12,12,12,.28);
+  --border-brand:rgba(118,33,176,.4);
+  --focus-ring:#7621B0;
 
   /* Status colours deepened for white surfaces — the dark-theme values are
      tuned for a near-black ground and drop below 4.5:1 on #FFFFFF. */
   --success-500:#0F8A63; --success-surface:rgba(15,138,99,.12);
   --warning-500:#A15C00; --warning-surface:rgba(161,92,0,.12);
   --danger-500:#C42B3A;  --danger-surface:rgba(196,43,58,.12);
-  --info-500:#0066FF;    --info-surface:rgba(0,102,255,.12);
+  --info-500:#5B2A86;    --info-surface:rgba(91,42,134,.12);
 
-  --border-subtle:#E2E8F0;
-  --border-strong:#CBD5E1;
-  --border-brand:rgba(0,102,255,.35);
-  --focus-ring:#0066FF;
-
-  --gradient-hero-glow:radial-gradient(60% 60% at 50% 0%,rgba(10,132,255,.14) 0%,rgba(248,250,252,0) 70%);
-  --gradient-text:linear-gradient(100deg,#05070B 0%,#0066FF 60%,#00C2FF 100%);
-  --gradient-card-edge:linear-gradient(160deg,rgba(5,7,11,.05) 0%,rgba(5,7,11,0) 45%);
-  --grid-line:rgba(203,213,225,.7);
+  --gradient-hero-glow:radial-gradient(60% 60% at 50% 0%,rgba(118,33,176,.10) 0%,rgba(244,245,246,0) 70%);
+  --gradient-text:linear-gradient(180deg,#4C525A 0%,#0C0C0C 100%);
+  --gradient-card-edge:linear-gradient(160deg,rgba(12,12,12,.05) 0%,rgba(12,12,12,0) 45%);
+  --grid-line:rgba(12,12,12,.10);
 
   color-scheme: light;
 }
@@ -203,7 +206,7 @@ body {
 }
 h1, h2, h3, h4, h5 {
   font-family: var(--font-display);
-  font-weight: var(--weight-bold);
+  font-weight: 900;
   letter-spacing: var(--track-tight);
   line-height: var(--leading-snug);
   margin: 0;
@@ -248,7 +251,8 @@ img { max-width: 100%; height: auto; }
 
 /* ---------- Type helpers ---------- */
 .eyebrow {
-  font-family: var(--font-mono);
+  font-family: var(--font-display);
+  font-weight: var(--weight-regular);
   font-size: var(--text-xs);
   letter-spacing: var(--track-eyebrow);
   text-transform: uppercase;

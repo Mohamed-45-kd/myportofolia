@@ -231,7 +231,7 @@ export function IconBubble({ name }: { name: IconName }) {
         width: 44,
         height: 44,
         borderRadius: "var(--radius-md)",
-        background: "rgba(10,132,255,.12)",
+        background: "color-mix(in srgb, var(--text-accent) 14%, transparent)",
         border: "1px solid var(--border-brand)",
         color: "var(--text-accent)",
         flexShrink: 0,

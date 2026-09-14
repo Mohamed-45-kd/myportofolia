@@ -76,7 +76,7 @@
 }
 .admin-link + .admin-link { margin-top: 2px; }
 .admin-link:hover { background: var(--surface-hover); color: var(--text-primary); }
-.admin-link-active { color: var(--text-primary); background: rgba(10,132,255,.12); }
+.admin-link-active { color: var(--text-primary); background: color-mix(in srgb, var(--text-primary) 12%, transparent); }
 .admin-link-active::before {
   content: "";
   position: absolute;
@@ -97,7 +97,7 @@
   border-radius: var(--radius-pill);
   padding: 1px 7px;
 }
-.admin-count-alert { color: var(--info-500); border-color: rgba(0,194,255,.35); background: var(--info-surface); }
+.admin-count-alert { color: var(--info-500); border-color: color-mix(in srgb, var(--info-500) 35%, transparent); background: var(--info-surface); }
 
 .admin-sidebar-foot { padding: var(--space-4); border-top: 1px solid var(--border-subtle); flex-shrink: 0; }
 
@@ -296,7 +296,7 @@
 }
 .inbox-item:last-child { border-bottom: 0; }
 .inbox-item:hover { background: var(--surface-hover); }
-.inbox-item-active { background: rgba(10,132,255,.12); }
+.inbox-item-active { background: color-mix(in srgb, var(--text-primary) 12%, transparent); }
 .inbox-item-active::before {
   content: "";
   position: absolute;
