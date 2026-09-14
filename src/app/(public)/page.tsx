@@ -20,6 +20,9 @@ import {
 import { ProjectCard } from "@/components/sections/shared";
 import { ContactCTA } from "@/components/sections/ContactCTA";
 import { Reveal } from "@/components/layout/Reveal";
+import { Magnet } from "@/components/motion/Magnet";
+import { Marquee } from "@/components/motion/Marquee";
+import { StackedProjects } from "@/components/motion/StackedProjects";
 
 /* ---------------- Hero ---------------- */
 
@@ -125,6 +128,7 @@ async function Hero() {
           {/* Portrait. Framed as a card so it reads as part of the system
               rather than a photo dropped onto the page. */}
           <div className="hero-portrait rise" style={{ animationDelay: "200ms" }}>
+            <Magnet padding={150} strength={3}>
             <div className="portrait-frame">
               <Image
                 src="/brand/mohamed-weli-jama.jpg"
@@ -140,11 +144,26 @@ async function Hero() {
                 {site.location}
               </span>
             </div>
+            </Magnet>
           </div>
         </div>
       </div>
     </section>
   );
+}
+
+/* ---------------- Screenshot marquee ---------------- */
+
+async function ScreenshotMarquee() {
+  const projects = await getPublishedProjects();
+  const tiles = projects.flatMap((project) =>
+    (project.gallery ?? []).map((shot) => ({
+      src: shot.src,
+      alt: shot.alt || project.title,
+    })),
+  );
+
+  return <Marquee tiles={tiles} />;
 }
 
 /* ---------------- Featured work ---------------- */
@@ -166,13 +185,7 @@ async function FeaturedWork() {
           action={<ArrowLink href="/projects">All projects</ArrowLink>}
         />
 
-        <div className="grid-cards">
-          {featuredProjects.map((project, i) => (
-            <Reveal key={project.slug} delay={i * 70}>
-              <ProjectCard project={project} />
-            </Reveal>
-          ))}
-        </div>
+        <StackedProjects projects={featuredProjects} />
       </div>
     </section>
   );
@@ -379,6 +392,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <ScreenshotMarquee />
       <FeaturedWork />
       <SkillsOverview />
       <MissionStrip />

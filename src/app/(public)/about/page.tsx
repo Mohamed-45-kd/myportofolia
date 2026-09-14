@@ -5,6 +5,7 @@ import { Card, Icon, IconBubble, SectionHeading, ArrowLink } from "@/components/
 import { PageHeader } from "@/components/sections/shared";
 import { ContactCTA } from "@/components/sections/ContactCTA";
 import { Reveal } from "@/components/layout/Reveal";
+import { AnimatedText } from "@/components/motion/AnimatedText";
 
 export const metadata: Metadata = {
   title: "About",
@@ -42,11 +43,10 @@ export default async function AboutPage() {
                   gap: "var(--space-6)",
                 }}
               >
-                <p className="prose-body">
-                  I am a software and web developer. I care about two things more
-                  than anything else: that the thing gets shipped, and that it still
-                  works six months after I hand it over.
-                </p>
+                <AnimatedText
+                  className="prose-body"
+                  text="I am a software and web developer. I care about two things more than anything else: that the thing gets shipped, and that it still works six months after I hand it over."
+                />
                 <p className="prose-body">
                   Most of what I build is management software — the systems that hold
                   the records an organisation runs on. A school management platform, an
