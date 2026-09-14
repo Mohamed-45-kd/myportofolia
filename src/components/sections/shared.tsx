@@ -14,33 +14,16 @@ export function PageHeader({
   lead?: string;
 }) {
   return (
-    <section
-      style={{
-        position: "relative",
-        paddingTop: "calc(var(--nav-h) + clamp(48px, 7vw, 88px))",
-        paddingBottom: "clamp(32px, 5vw, 56px)",
-        overflow: "hidden",
-      }}
-    >
+    <section className="page-header">
       <div className="hero-glow" aria-hidden="true" />
+      <div className="grid-texture" aria-hidden="true" />
       <div className="shell" style={{ position: "relative" }}>
         <p className="eyebrow rise">{eyebrow}</p>
-        <h1
-          className="rise"
-          style={{
-            fontSize: "clamp(38px, 6vw, 68px)",
-            marginTop: "var(--space-4)",
-            letterSpacing: "var(--track-tight)",
-            animationDelay: "60ms",
-          }}
-        >
+        <h1 className="page-title gradient-text rise" style={{ animationDelay: "60ms" }}>
           {title}
         </h1>
         {lead ? (
-          <p
-            className="prose-body rise"
-            style={{ marginTop: "var(--space-6)", animationDelay: "120ms" }}
-          >
+          <p className="page-lead rise" style={{ animationDelay: "120ms" }}>
             {lead}
           </p>
         ) : null}

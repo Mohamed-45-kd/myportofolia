@@ -19,6 +19,7 @@ import {
 } from "@/components/ui";
 import { ContactCTA } from "@/components/sections/ContactCTA";
 import { Reveal } from "@/components/layout/Reveal";
+import { AnimatedText } from "@/components/motion/AnimatedText";
 import { Magnet } from "@/components/motion/Magnet";
 import { Marquee } from "@/components/motion/Marquee";
 import { StackedProjects } from "@/components/motion/StackedProjects";
@@ -86,7 +87,7 @@ async function Numbers() {
   ]);
 
   return (
-    <section className="shell numbers-strip">
+    <section className="shell numbers-band">
       <Stat value={String(publishedProjects.length)} label="Projects shipped or in build" />
       <Stat value={String(services.length)} label="Services offered" />
       <Stat
@@ -111,13 +112,137 @@ async function ScreenshotMarquee() {
   return <Marquee tiles={tiles} />;
 }
 
-/* ---------------- Featured work ---------------- */
+/* ---------------- About ---------------- */
+
+function AboutPanel() {
+  return (
+    <section className="panel panel-dark panel-1">
+      <div className="shell">
+        <h2 className="panel-heading">About me</h2>
+
+        <AnimatedText
+          className="statement"
+          text="I am a software and web developer. Most of what I build is management software — the systems that hold the records an organisation runs on. I care about two things more than anything else: that the thing gets shipped, and that it still works six months after I hand it over."
+        />
+
+        <div className="statement-actions">
+          <ButtonLink href="/about" size="lg">
+            More about me
+          </ButtonLink>
+          <ButtonLink href="/journey" variant="secondary" size="lg">
+            My journey
+          </ButtonLink>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Skills ---------------- */
+
+async function SkillsOverview() {
+  const skillGroups = await getSkillGroups();
+
+  return (
+    <section className="panel panel-light panel-2">
+      <div className="shell">
+        <h2 className="panel-heading">Skills</h2>
+        <p className="panel-lead">
+          The stack I actually ship on, grouped the way I use it.
+        </p>
+
+        <div className="big-list">
+          {skillGroups.map((group, i) => (
+            <Reveal key={group.title} delay={i * 70}>
+              <Link href="/skills" className="big-row">
+                <span className="big-number">{String(i + 1).padStart(2, "0")}</span>
+                <span className="big-body">
+                  <span className="big-name">{group.title}</span>
+                  <span className="big-desc">{group.note}</span>
+                  <span className="big-tags">
+                    {group.items.map((item) => (
+                      <span className="big-tag" key={item.name}>
+                        {item.name}
+                      </span>
+                    ))}
+                  </span>
+                </span>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Mission ---------------- */
+
+function MissionStrip() {
+  return (
+    <section className="panel panel-dark panel-3">
+      <div className="shell">
+        <h2 className="panel-heading">Mission</h2>
+
+        {/* Set verbatim, in tracked uppercase, exactly as the brand requires. */}
+        <p className="mission-statement">{site.mission}</p>
+
+        <p className="statement" style={{ marginTop: "clamp(32px, 5vw, 56px)" }}>
+          Not as a slogan. Every organisation here that still runs on paper is
+          losing time it cannot get back and information it cannot check. One
+          system at a time — a school, a bookshop, a hiring process — is how that
+          changes.
+        </p>
+
+        <div className="statement-actions">
+          <ButtonLink href="/about#mission" variant="secondary" size="lg">
+            Read the full mission
+          </ButtonLink>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Achievements ---------------- */
+
+async function SelectedAchievements() {
+  const achievements = await getAchievements();
+
+  return (
+    <section className="panel panel-dark panel-flush panel-4">
+      <div className="shell">
+        <h2 className="panel-heading">Recognition</h2>
+        <p className="panel-lead">
+          Where the technology journey started, and what has come out of it since.
+        </p>
+
+        <div className="big-list">
+          {achievements.map((item, i) => (
+            <Reveal key={item.title} delay={i * 70}>
+              <div className="big-row">
+                <span className="big-number">{String(i + 1).padStart(2, "0")}</span>
+                <span className="big-body">
+                  <span className="big-name">{item.title}</span>
+                  <span className="big-meta">{item.meta}</span>
+                  <span className="big-desc">{item.description}</span>
+                </span>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Projects ---------------- */
 
 async function FeaturedWork() {
   const featuredProjects = await getFeaturedProjects();
 
   return (
-    <section className="projects-panel">
+    <section className="panel panel-dark" style={{ zIndex: 6, marginTop: "-56px" }}>
       <div className="shell">
         <h2 className="panel-heading">Projects</h2>
 
@@ -131,179 +256,24 @@ async function FeaturedWork() {
   );
 }
 
-/* ---------------- Skills overview ---------------- */
-
-async function SkillsOverview() {
-  const skillGroups = await getSkillGroups();
-
-  return (
-    <section className="section" style={{ background: "var(--bg-subtle)" }}>
-      <div className="shell">
-        <SectionHeading
-          eyebrow="02 — Technology"
-          title="What I build with"
-          lead="The stack I actually ship on, grouped the way I use it."
-          action={<ArrowLink href="/skills">Full breakdown</ArrowLink>}
-        />
-
-        <div className="grid-cards">
-          {skillGroups.map((group, i) => (
-            <Reveal key={group.title} delay={i * 60}>
-              <Card interactive className="h-full">
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "var(--space-4)",
-                    marginBottom: "var(--space-5)",
-                  }}
-                >
-                  <IconBubble name={group.icon} />
-                  <h3 style={{ fontSize: "var(--text-lg)" }}>{group.title}</h3>
-                </div>
-                <p
-                  style={{
-                    fontSize: "var(--text-sm)",
-                    color: "var(--text-muted)",
-                    marginBottom: "var(--space-5)",
-                    lineHeight: "var(--leading-normal)",
-                  }}
-                >
-                  {group.note}
-                </p>
-                <div className="tag-list">
-                  {group.items.map((item) => (
-                    <span className="tag" key={item.name}>
-                      {item.name}
-                    </span>
-                  ))}
-                </div>
-              </Card>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- Mission strip ---------------- */
-
-function MissionStrip() {
-  return (
-    <section className="section-tight">
-      <div className="shell">
-        <div
-          className="card"
-          style={{ position: "relative", overflow: "hidden", padding: "clamp(32px, 5vw, 56px)" }}
-        >
-          <div className="grid-texture" aria-hidden="true" />
-          <div
-            style={{
-              position: "relative",
-              display: "grid",
-              gap: "var(--space-8)",
-              gridTemplateColumns: "1fr",
-              alignItems: "center",
-            }}
-          >
-            <div>
-              <p className="eyebrow">The mission</p>
-              <p
-                className="hero-mission"
-                style={{
-                  fontSize: "clamp(16px, 2.4vw, 26px)",
-                  marginTop: "var(--space-5)",
-                  lineHeight: 1.7,
-                }}
-              >
-                {site.mission}
-              </p>
-              <p className="prose-body" style={{ marginTop: "var(--space-6)" }}>
-                Not as a slogan. Every organisation here that still runs on paper is
-                losing time it cannot get back and information it cannot check. One
-                system at a time — a school, a bookshop, a hiring process — is how
-                that changes.
-              </p>
-              <div style={{ marginTop: "var(--space-7)" }}>
-                <ArrowLink href="/about#mission">Read the full mission</ArrowLink>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- Achievements ---------------- */
-
-async function SelectedAchievements() {
-  const achievements = await getAchievements();
-
-  return (
-    <section className="section">
-      <div className="shell">
-        <SectionHeading
-          eyebrow="03 — Recognition"
-          title="Selected achievements"
-          lead="Where the technology journey started, and what has come out of it since."
-          action={<ArrowLink href="/journey">Full journey</ArrowLink>}
-        />
-
-        <div className="grid-cards">
-          {achievements.map((a, i) => (
-            <Reveal key={a.title} delay={i * 60}>
-              <Card interactive>
-                <IconBubble name={a.icon} />
-                <h3 style={{ fontSize: "var(--text-md)", marginTop: "var(--space-5)" }}>
-                  {a.title}
-                </h3>
-                <p
-                  className="eyebrow"
-                  style={{ marginTop: "var(--space-2)", textTransform: "none", letterSpacing: "var(--track-wide)" }}
-                >
-                  {a.meta}
-                </p>
-                <p
-                  style={{
-                    marginTop: "var(--space-4)",
-                    fontSize: "var(--text-sm)",
-                    color: "var(--text-muted)",
-                    lineHeight: "var(--leading-normal)",
-                  }}
-                >
-                  {a.description}
-                </p>
-              </Card>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- Services teaser ---------------- */
-
 async function ServicesTeaser() {
   const services = await getServices();
 
   return (
-    <section className="services-panel">
+    <section className="panel panel-light panel-5">
       <div className="shell">
         <h2 className="panel-heading">Services</h2>
 
-        <div className="service-list">
+        <div className="big-list">
           {services.map((service, i) => (
             <Reveal key={service.slug} delay={i * 80}>
-              <Link href="/services" className="service-row">
-                <span className="service-number">
+              <Link href="/services" className="big-row">
+                <span className="big-number">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <span className="service-body">
-                  <span className="service-name">{service.title}</span>
-                  <span className="service-desc">{service.body}</span>
+                <span className="big-body">
+                  <span className="big-name">{service.title}</span>
+                  <span className="big-desc">{service.body}</span>
                 </span>
               </Link>
             </Reveal>
@@ -320,8 +290,9 @@ export default function HomePage() {
       <Hero />
       <Numbers />
       <ScreenshotMarquee />
-      <MissionStrip />
+      <AboutPanel />
       <SkillsOverview />
+      <MissionStrip />
       <SelectedAchievements />
       <ServicesTeaser />
       <FeaturedWork />

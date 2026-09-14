@@ -27,127 +27,73 @@ export default async function JourneyPage() {
         lead="The route from a school ICT club to building the systems on this site."
       />
 
-      {/* ---------------- Experience ---------------- */}
-      <section className="section-tight" id="experience">
+      <section className="panel panel-light panel-2" id="experience">
         <div className="shell">
-          <SectionHeading eyebrow="01 — Experience" title="Where I have worked" />
-
-          <div className="timeline">
+          <h2 className="panel-heading">Experience</h2>
+          <div className="big-list">
             {experience.map((item, i) => (
               <Reveal key={item.title + item.period} delay={i * 70}>
-                <article className="timeline-item">
-                  <span
-                    className={`timeline-dot${item.current ? " timeline-dot-current" : ""}`}
-                    aria-hidden="true"
-                  />
-                  <p className="timeline-period">
-                    {item.period}
-                    {item.current ? (
-                      <span className="badge badge-success" style={{ marginLeft: 12 }}>
-                        Current
+                <div className="big-row">
+                  <span className="big-number">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="big-body">
+                    <span className="big-name">{item.title}</span>
+                    <span className="big-meta">
+                      {item.org} · {item.period}
+                    </span>
+                    <span className="big-desc">{item.description}</span>
+                    {item.tags ? (
+                      <span className="big-tags">
+                        {item.tags.map((t) => (
+                          <span className="big-tag" key={t}>
+                            {t}
+                          </span>
+                        ))}
                       </span>
                     ) : null}
-                  </p>
-                  <h3 className="timeline-title" style={{ marginTop: "var(--space-3)" }}>
-                    {item.title}
-                  </h3>
-                  <p className="timeline-org">{item.org}</p>
-                  <p
-                    style={{
-                      marginTop: "var(--space-4)",
-                      color: "var(--text-secondary)",
-                      lineHeight: "var(--leading-relaxed)",
-                      maxWidth: 640,
-                    }}
-                  >
-                    {item.description}
-                  </p>
-                  {item.tags ? (
-                    <div style={{ marginTop: "var(--space-5)" }}>
-                      <TagList items={item.tags} />
-                    </div>
-                  ) : null}
-                </article>
+                  </span>
+                </div>
               </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ---------------- Education ---------------- */}
-      <section className="section-tight" id="education" style={{ background: "var(--bg-subtle)" }}>
+      <section className="panel panel-dark panel-3" id="education">
         <div className="shell">
-          <SectionHeading
-            eyebrow="02 — Education"
-            title="Where I learned it"
-            lead="Pharo Sheikh Secondary School, and everything learned since by building."
-          />
-
-          <div className="grid-2">
+          <h2 className="panel-heading">Education</h2>
+          <div className="big-list">
             {education.map((item, i) => (
               <Reveal key={item.title} delay={i * 70}>
-                <Card>
-                  <div style={{ display: "flex", gap: "var(--space-4)" }}>
-                    <IconBubble name={item.icon} />
-                    <div>
-                      <p className="timeline-period">{item.period}</p>
-                      <h3 style={{ fontSize: "var(--text-lg)", marginTop: "var(--space-2)" }}>
-                        {item.title}
-                      </h3>
-                      <p className="timeline-org">{item.org}</p>
-                      <p
-                        style={{
-                          marginTop: "var(--space-4)",
-                          fontSize: "var(--text-sm)",
-                          color: "var(--text-muted)",
-                          lineHeight: "var(--leading-relaxed)",
-                        }}
-                      >
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                </Card>
+                <div className="big-row">
+                  <span className="big-number">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="big-body">
+                    <span className="big-name">{item.title}</span>
+                    <span className="big-meta">
+                      {item.org} · {item.period}
+                    </span>
+                    <span className="big-desc">{item.description}</span>
+                  </span>
+                </div>
               </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ---------------- Achievements ---------------- */}
-      <section className="section-tight" id="achievements">
+      <section className="panel panel-dark panel-flush panel-4" id="achievements">
         <div className="shell">
-          <SectionHeading
-            eyebrow="03 — Achievements"
-            title="Recognition and results"
-            lead="The ICT Club work, the innovation recognition, and what has been built since."
-          />
-
-          <div className="grid-cards">
-            {achievements.map((a, i) => (
-              <Reveal key={a.title} delay={i * 60}>
-                <Card interactive>
-                  <IconBubble name={a.icon} />
-                  <h3 style={{ fontSize: "var(--text-md)", marginTop: "var(--space-5)" }}>
-                    {a.title}
-                  </h3>
-                  <p
-                    className="eyebrow"
-                    style={{ marginTop: "var(--space-2)", letterSpacing: "var(--track-wide)" }}
-                  >
-                    {a.meta}
-                  </p>
-                  <p
-                    style={{
-                      marginTop: "var(--space-4)",
-                      fontSize: "var(--text-sm)",
-                      color: "var(--text-muted)",
-                      lineHeight: "var(--leading-normal)",
-                    }}
-                  >
-                    {a.description}
-                  </p>
-                </Card>
+          <h2 className="panel-heading">Recognition</h2>
+          <div className="big-list">
+            {achievements.map((item, i) => (
+              <Reveal key={item.title} delay={i * 70}>
+                <div className="big-row">
+                  <span className="big-number">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="big-body">
+                    <span className="big-name">{item.title}</span>
+                    <span className="big-meta">{item.meta}</span>
+                    <span className="big-desc">{item.description}</span>
+                  </span>
+                </div>
               </Reveal>
             ))}
           </div>

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { getSkillGroups } from "@/lib/repo";
-import { Card, IconBubble } from "@/components/ui";
 import { PageHeader, SkillMeter } from "@/components/sections/shared";
 import { ContactCTA } from "@/components/sections/ContactCTA";
 import { Reveal } from "@/components/layout/Reveal";
@@ -23,65 +22,34 @@ export default async function SkillsPage() {
         lead="Percentages reflect how much of my shipped work leans on each tool — not a self-assessment."
       />
 
-      <section className="section-tight">
+      <section className="panel panel-light panel-2">
         <div className="shell">
-          <div className="grid-2">
-            {skillGroups.map((group, i) => (
-              <Reveal key={group.title} delay={i * 60}>
-                <Card>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "var(--space-4)",
-                    }}
-                  >
-                    <IconBubble name={group.icon} />
-                    <div>
-                      <h2 style={{ fontSize: "var(--text-lg)" }}>{group.title}</h2>
-                      <p
-                        style={{
-                          fontSize: "var(--text-sm)",
-                          color: "var(--text-muted)",
-                          marginTop: "var(--space-1)",
-                        }}
-                      >
-                        {group.note}
-                      </p>
-                    </div>
-                  </div>
+          <h2 className="panel-heading">Stack</h2>
 
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "var(--space-5)",
-                      marginTop: "var(--space-7)",
-                    }}
-                  >
-                    {group.items.map((item) => (
-                      <SkillMeter key={item.name} name={item.name} level={item.level} />
-                    ))}
-                  </div>
-                </Card>
+          <div className="big-list">
+            {skillGroups.map((group, i) => (
+              <Reveal key={group.title} delay={i * 70}>
+                <div className="big-row">
+                  <span className="big-number">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="big-body">
+                    <span className="big-name">{group.title}</span>
+                    <span className="big-desc">{group.note}</span>
+                    <span className="skill-meters">
+                      {group.items.map((item) => (
+                        <SkillMeter key={item.name} name={item.name} level={item.level} />
+                      ))}
+                    </span>
+                  </span>
+                </div>
               </Reveal>
             ))}
           </div>
-        </div>
-      </section>
 
-      <section className="section-tight">
-        <div className="shell">
-          <Card>
-            <p className="eyebrow">How I choose</p>
-            <p className="prose-body" style={{ marginTop: "var(--space-5)" }}>
-              I pick the stack the project can be maintained in, not the one that is
-              interesting this year. That usually means Next.js and PostgreSQL,
-              because the tooling is stable, the hosting is cheap, and the next
-              developer will recognise it. When something simpler would do, I use
-              something simpler.
-            </p>
-          </Card>
+          <p className="panel-lead" style={{ marginTop: "clamp(48px, 7vw, 88px)", marginBottom: 0 }}>
+            I pick the stack the project can be maintained in, not the one that is
+            interesting this year. When something simpler would do, I use something
+            simpler.
+          </p>
         </div>
       </section>
 

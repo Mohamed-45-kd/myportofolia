@@ -694,17 +694,39 @@
 }
 .marquee-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-/* ---------- Services panel (light block) ---------- */
-.services-panel {
+/* ---------- Panels ----------
+   The rhythm the reference is built on: full-width blocks with rounded top
+   corners, alternating light and dark, each pulled up over the one before so
+   the corner cuts into it. Generic on purpose — Services, Skills, Achievements
+   and Projects all use it. */
+.panel {
   position: relative;
-  z-index: 1;
-  background: #FFFFFF;
-  color: #0C0C0C;
   border-radius: 40px 40px 0 0;
   padding-block: clamp(56px, 9vw, 128px);
 }
-@media (min-width: 640px) { .services-panel { border-radius: 50px 50px 0 0; } }
-@media (min-width: 768px) { .services-panel { border-radius: 60px 60px 0 0; } }
+@media (min-width: 640px) { .panel { border-radius: 50px 50px 0 0; } }
+@media (min-width: 768px) { .panel { border-radius: 60px 60px 0 0; } }
+
+.panel-light { background: #FFFFFF; color: #0C0C0C; }
+
+/* A panel that continues the previous one's colour: no rounded seam, no
+   overlap, so two same-coloured blocks read as one region with two headings
+   rather than showing a corner cut that is invisible anyway. */
+.panel-flush {
+  border-radius: 0;
+  margin-top: 0;
+  padding-top: clamp(24px, 4vw, 56px);
+}
+.panel-dark  { background: var(--bg-base); color: var(--text-primary); }
+
+/* Each panel sits above the previous one and overlaps its rounded corner. */
+.panel-1 { z-index: 1; }
+.panel-2 { z-index: 2; margin-top: -40px; }
+.panel-3 { z-index: 3; margin-top: -40px; }
+.panel-4 { z-index: 4; margin-top: -40px; }
+.panel-5 { z-index: 5; margin-top: -40px; }
+@media (min-width: 640px) { .panel-2, .panel-3, .panel-4, .panel-5 { margin-top: -48px; } }
+@media (min-width: 768px) { .panel-2, .panel-3, .panel-4, .panel-5 { margin-top: -56px; } }
 
 .panel-heading {
   font-size: clamp(3rem, 12vw, 160px);
@@ -713,59 +735,167 @@
   line-height: 0.9;
   letter-spacing: -0.04em;
   text-align: center;
-  color: #0C0C0C;
+  color: currentColor;
   margin-bottom: clamp(48px, 8vw, 112px);
 }
+/* On dark panels the heading takes the brushed-silver gradient. */
+.panel-dark .panel-heading {
+  background: var(--gradient-text);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+}
+.panel-lead {
+  text-align: center;
+  max-width: 46rem;
+  margin: calc(clamp(48px, 8vw, 112px) * -0.62) auto clamp(40px, 6vw, 80px);
+  font-weight: var(--weight-light);
+  font-size: clamp(0.95rem, 1.7vw, 1.3rem);
+  line-height: var(--leading-relaxed);
+  opacity: 0.6;
+}
 
-.service-list { max-width: 1024px; margin-inline: auto; }
-.service-row {
+/* ---------- Big numbered rows ---------- */
+.big-list { max-width: 1024px; margin-inline: auto; }
+.big-row {
   display: flex;
   align-items: flex-start;
   gap: clamp(16px, 4vw, 48px);
   padding-block: clamp(24px, 4vw, 48px);
-  border-top: 1px solid rgba(12, 12, 12, 0.15);
-  color: #0C0C0C;
+  border-top: 1px solid currentColor;
+  border-top-color: color-mix(in srgb, currentColor 18%, transparent);
+  color: inherit;
   transition: opacity var(--dur-base) var(--ease-standard);
 }
-.service-list > *:last-child .service-row { border-bottom: 1px solid rgba(12, 12, 12, 0.15); }
-.service-row:hover { opacity: 0.65; }
+.big-list > *:last-child .big-row {
+  border-bottom: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+}
+a.big-row:hover { opacity: 0.65; }
 
-.service-number {
+.big-number {
   font-weight: 900;
   font-size: clamp(2.25rem, 10vw, 140px);
   line-height: 0.85;
   letter-spacing: -0.04em;
   flex-shrink: 0;
 }
-.service-body { display: flex; flex-direction: column; gap: var(--space-3); padding-top: 0.4em; }
-.service-name {
+.big-body { display: flex; flex-direction: column; gap: var(--space-3); padding-top: 0.4em; min-width: 0; }
+.big-name {
   font-weight: var(--weight-medium);
   text-transform: uppercase;
   letter-spacing: var(--track-snug);
   font-size: clamp(1rem, 2.2vw, 2.1rem);
   line-height: 1.1;
 }
-.service-desc {
+.big-desc {
   font-weight: var(--weight-light);
   line-height: var(--leading-relaxed);
   max-width: 42rem;
   font-size: clamp(0.85rem, 1.6vw, 1.25rem);
   opacity: 0.6;
 }
-
-/* ---------- Projects panel (dark, pulled over the light block) ---------- */
-.projects-panel {
-  position: relative;
-  z-index: 2;
-  background: var(--bg-base);
-  border-radius: 40px 40px 0 0;
-  margin-top: -40px;
-  padding-block: clamp(56px, 9vw, 128px);
+.big-meta {
+  font-size: clamp(0.7rem, 1.2vw, 0.95rem);
+  letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase;
+  opacity: 0.45;
 }
-@media (min-width: 640px) { .projects-panel { border-radius: 50px 50px 0 0; margin-top: -48px; } }
-@media (min-width: 768px) { .projects-panel { border-radius: 60px 60px 0 0; margin-top: -56px; } }
-.projects-panel .panel-heading {
+.big-tags { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.big-tag {
+  border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+  border-radius: var(--radius-pill);
+  padding: 4px 14px;
+  font-size: clamp(0.7rem, 1.1vw, 0.9rem);
+  text-transform: uppercase;
+  letter-spacing: var(--track-wide);
+  opacity: 0.75;
+}
+
+/* ---------- Statement block (About / Contact) ---------- */
+.statement {
+  text-align: center;
+  max-width: 44rem;
+  margin-inline: auto;
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-relaxed);
+}
+.statement-actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-top: clamp(40px, 7vw, 88px);
+}
+
+/* ---------- Numbers band ---------- */
+.numbers-band {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: clamp(24px, 4vw, 56px);
+  padding-block: clamp(40px, 7vw, 96px);
+}
+.numbers-band .stat-value {
+  font-size: clamp(3rem, 9vw, 120px);
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
   background: var(--gradient-text);
   -webkit-background-clip: text; background-clip: text;
   color: transparent;
 }
+.numbers-band .stat-label {
+  margin-top: var(--space-4);
+  font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+  letter-spacing: var(--track-eyebrow);
+  opacity: 0.55;
+}
+
+/* The mission line — always full tracked uppercase, never paraphrased. */
+.mission-statement {
+  text-align: center;
+  max-width: 52rem;
+  margin-inline: auto;
+  font-size: clamp(0.95rem, 2.4vw, 1.9rem);
+  letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase;
+  line-height: 1.7;
+  color: var(--text-accent);
+}
+
+/* ---------- Inner page header ---------- */
+.page-header {
+  position: relative;
+  overflow: hidden;
+  padding-top: calc(var(--nav-h) + clamp(48px, 8vw, 104px));
+  padding-bottom: clamp(40px, 7vw, 88px);
+}
+.page-title {
+  font-size: clamp(2.75rem, 10vw, 128px);
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  margin-top: var(--space-5);
+}
+.page-lead {
+  margin-top: clamp(24px, 3vw, 40px);
+  max-width: 44rem;
+  font-weight: var(--weight-light);
+  font-size: clamp(0.95rem, 1.7vw, 1.3rem);
+  line-height: var(--leading-relaxed);
+  opacity: 0.65;
+}
+
+/* Meters inside a big row, two-up on wider screens. */
+.skill-meters {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+  max-width: 40rem;
+}
+@media (min-width: 640px) { .skill-meters { grid-template-columns: 1fr 1fr; gap: var(--space-4) var(--space-7); } }
+/* On the light panel the track and fill need the panel's own ink. */
+.panel-light .meter-track { background: rgba(12,12,12,.08); border-color: rgba(12,12,12,.15); }
+.panel-light .meter-name { color: #0C0C0C; }
+.panel-light .meter-value { color: rgba(12,12,12,.5); }
